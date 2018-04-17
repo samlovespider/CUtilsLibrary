@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.samcai.cutilslibrary.BuildConfig;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,22 +15,22 @@ import java.util.Arrays;
 /**
  * Created by caizhenliang on 2018/2/21.
  *
- * @version 1.5
+ * @version 1.6
  */
 public class LogUtils {
 
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
     /**
      * init in application
      */
     public static boolean isPro;
-    public static String TAG;
-
-    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-    private static final String HEADER = TAG;
+    public static String TAG = BuildConfig.APPLICATION_ID;
+    private static String HEADER;
 
     public static void init(boolean sIsPro, String sTAG) {
         isPro = sIsPro;
         TAG = sTAG;
+        HEADER = sTAG;
     }
 
     /*///////////////////////////////////////////////////////////////////////////

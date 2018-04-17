@@ -11,13 +11,21 @@ import com.samcai.cutilslibrary.R;
 /**
  * Created by caizhenliang on 2018/3/16.
  *
- * @version 1.5
+ * @version 1.6
  */
 public class AlertDialogUtils {
 
     private static int POSITIVE_STRING = R.string.alert_dialog_positive;
     private static int NEGATIVE_STRING = R.string.alert_dialog_negative;
 
+    public static void init(int sPositiveString, int sNegativeString) {
+        POSITIVE_STRING = sPositiveString;
+        NEGATIVE_STRING = sNegativeString;
+    }
+
+    /*///////////////////////////////////////////////////////////////////////////
+    //
+    ///////////////////////////////////////////////////////////////////////////*/
 
     /**
      * for yes and no option
