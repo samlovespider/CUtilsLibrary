@@ -12,7 +12,7 @@ import com.samcai.cutilslibrary.base.adapter.CommonRecycleAdapter;
 /**
  * Created by caizhenliang on 2018/3/5.
  *
- * @version 1.3
+ * @version 1.4
  */
 public abstract class BaseRecycleFragment extends BaseFragment {
 
@@ -29,6 +29,7 @@ public abstract class BaseRecycleFragment extends BaseFragment {
     @Override
     protected void initAdapter(@NonNull View view) {
         mRecyclerView = view.findViewById(initRecyclerViewID());
+        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setLayoutManager(initLayoutManger());
         if (getContext() != null) {
             mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));

@@ -15,7 +15,7 @@ import java.util.Arrays;
 /**
  * Created by caizhenliang on 2018/2/21.
  *
- * @version 1.6
+ * @version 1.7
  */
 public class LogUtils {
 
@@ -25,7 +25,7 @@ public class LogUtils {
      */
     public static boolean isPro;
     public static String TAG = BuildConfig.APPLICATION_ID;
-    private static String HEADER;
+    private static String HEADER = BuildConfig.APPLICATION_ID;
 
     public static void init(boolean sIsPro, String sTAG) {
         isPro = sIsPro;

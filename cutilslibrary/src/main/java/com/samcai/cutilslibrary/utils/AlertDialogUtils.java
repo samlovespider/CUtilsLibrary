@@ -5,18 +5,16 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
-import com.samcai.cutilslibrary.R;
-
 
 /**
  * Created by caizhenliang on 2018/3/16.
  *
- * @version 1.6
+ * @version 1.7
  */
 public class AlertDialogUtils {
 
-    private static int POSITIVE_STRING = R.string.alert_dialog_positive;
-    private static int NEGATIVE_STRING = R.string.alert_dialog_negative;
+    private static int POSITIVE_STRING;
+    private static int NEGATIVE_STRING;
 
     public static void init(int sPositiveString, int sNegativeString) {
         POSITIVE_STRING = sPositiveString;

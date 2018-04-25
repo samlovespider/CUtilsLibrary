@@ -2,7 +2,7 @@
 
     <!--AlertDialogUtils-->
     <string name="alert_dialog_positive">好的</string>
-    <string name="alert_dialog_negative">不了</string>
+    <string name="alert_dialog_negative">取消</string>
     <string name="alert_dialog_error">警告</string>
 
 </resources>

@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by caizhenliang on 2018/3/5.
  *
- * @version 1.1
+ * @version 1.2
  */
 public abstract class CommonRecycleAdapter<T> extends RecyclerView.Adapter<CommonViewHolder> {
 
@@ -58,8 +59,13 @@ public abstract class CommonRecycleAdapter<T> extends RecyclerView.Adapter<Commo
         return mDataList.size();
     }
 
+    public void clearList() {
+        mDataList.clear();
+        notifyDataSetChanged();
+    }
+
     public void updateData(List<T> sDataList) {
-        mDataList = sDataList;
+        mDataList = new ArrayList<>(sDataList);
         notifyDataSetChanged();
     }
 
