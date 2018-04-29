@@ -9,7 +9,7 @@ import android.widget.TextView;
 /**
  * Created by caizhenliang on 2018/3/5.
  *
- * @version 1.1
+ * @version 1.2
  */
 public class CommonViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
@@ -31,6 +31,24 @@ public class CommonViewHolder extends RecyclerView.ViewHolder implements View.On
             viewSparseArray.put(viewId, view);
         }
         return (T) view;
+    }
+
+    public ImageView getImageView(int viewId) {
+        View view = viewSparseArray.get(viewId);
+        if (view == null) {
+            view = itemView.findViewById(viewId);
+            viewSparseArray.put(viewId, view);
+        }
+        return (ImageView) view;
+    }
+
+    public TextView getTextView(int viewId) {
+        View view = viewSparseArray.get(viewId);
+        if (view == null) {
+            view = itemView.findViewById(viewId);
+            viewSparseArray.put(viewId, view);
+        }
+        return (TextView) view;
     }
 
     public CommonViewHolder setButtonOnClickListener(int viewId, View.OnClickListener onClickListener) {

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,16 +17,33 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.samcai.cutilslibrary.utils.LoadTaskUtils;
 import com.samcai.cutilslibrary.utils.LogUtils;
 
 
 /**
  * Created by caizhenliang on 2018/3/2.
  *
- * @version 1.3
+ * @version 1.4
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    /**
+     * use load task or not
+     */
+    private boolean mLoadTaskEnable = false;
+
+    public boolean isLoadTaskEnable() {
+        return mLoadTaskEnable;
+    }
+
+    public void setLoadTaskEnable(boolean sLoadTaskEnable) {
+        this.mLoadTaskEnable = sLoadTaskEnable;
+    }
+
+    /*///////////////////////////////////////////////////////////////////////////
+    //
+    ///////////////////////////////////////////////////////////////////////////*/
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,10 +120,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected abstract void initContent();
 
-    /*///////////////////////////////////////////////////////////////////////////
-    // view
-    ///////////////////////////////////////////////////////////////////////////*/
-
     protected abstract void initHeader();
 
     protected abstract void initNavigationBar();
@@ -118,16 +134,29 @@ public abstract class BaseActivity extends AppCompatActivity {
         return 0;
     }
 
+    protected Handler doInBackgroud(String sBackTaskName) {
+        HandlerThread tHandlerThread = new HandlerThread(sBackTaskName);
+        tHandlerThread.start();
+        Handler tUIHandler = new Handler(new CUICallback());
+        return new Handler(tHandlerThread.getLooper(), new CChildCallback());
+    }
+
+    protected void backHandlerCallback(int sWhat) {}
+
+    protected void uiHandlerCallback(Message sMsg) {}
+
     /*///////////////////////////////////////////////////////////////////////////
     // CallBack
     ///////////////////////////////////////////////////////////////////////////*/
 
     protected void presenterCallbackMessage(String sJsonStr, String sServiceName) {
         LogUtils.LogSuccess(sJsonStr, sServiceName);
+        loadTaskState(sServiceName);
     }
 
     protected void presenterCallbackEmpty(int sCode, String sServiceName) {
         LogUtils.LogEmpty(sCode, sServiceName);
+        loadTaskState(sServiceName);
     }
 
     protected void presenterCallbackError(int sCode, String sJsonStr, String sServiceName) {
@@ -136,6 +165,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void presenterCallbackFailure(String sJsonStr, String sServiceName) {
         LogUtils.LogFailure(sJsonStr, sServiceName);
+    }
+
+    protected void presenterCallbackAllTaskFinish() {
+        LogUtils.d(LoadTaskUtils.TAG, LoadTaskUtils.ALL_FINISHED, LoadTaskUtils.TAG);
+    }
+
+    private void loadTaskState(String sServiceName) {
+        if (mLoadTaskEnable) {
+            LoadTaskUtils.setLoadTaskFinished(sServiceName);
+            if (LoadTaskUtils.isAllFinished()) {
+                presenterCallbackAllTaskFinish();
+            }
+        }
     }
 
     /*///////////////////////////////////////////////////////////////////////////
@@ -191,6 +233,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             onBackPressed();
+        }
+    }
+
+    public class CChildCallback implements Handler.Callback {
+
+        @Override
+        public boolean handleMessage(Message msg) {
+            backHandlerCallback(msg.what);
+            return false;
+        }
+    }
+
+    public class CUICallback implements Handler.Callback {
+
+        @Override
+        public boolean handleMessage(Message msg) {
+            uiHandlerCallback(msg);
+            return false;
         }
     }
 }
