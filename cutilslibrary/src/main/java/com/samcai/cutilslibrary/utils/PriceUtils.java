@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /**
  * Created by caizhenliang on 2018/2/20.
  *
- * @version 1.2
+ * @version 1.3
  */
 public class PriceUtils {
 
@@ -20,4 +20,13 @@ public class PriceUtils {
                 .divide(new BigDecimal(100), 2, BigDecimal.ROUND_DOWN)
                 .toString();
     }
+
+    public static int SignedPrice2IntegerFormat(String price) {
+        StringBuilder stringBuilder = new StringBuilder(price);
+        stringBuilder.deleteCharAt(0);
+        return new BigDecimal(stringBuilder.toString())
+                .multiply(new BigDecimal(100))
+                .intValue();
+    }
+
 }

@@ -17,7 +17,7 @@ import butterknife.Unbinder;
 /**
  * Created by caizhenliang on 2018/3/2.
  *
- * @version 1.3
+ * @version 1.4
  */
 public abstract class BaseFragment extends Fragment {
 
@@ -63,19 +63,6 @@ public abstract class BaseFragment extends Fragment {
             inflater.inflate(menuID, menu);
         }
     }
-
-/*
-    有时候需要在Fragment中使用Toolbar，
-    比如Activity中不同的Tab显示不同的Fragment，
-    同时每个Tab的Toolbar标题、Menu均不相同，
-    这时在Activity中使用同一个Toolbar就相当不方便了。
-    我们可以在每个Fragment的布局中添加各自的Toolbar，
-    然后在Fragment中单独控制。
-
-    use in different fragment
-
-    ((AppCompatActivity)getActivity()).setSupportActionBar((Toolbar) mContentView.findViewById(R.id.tb_toolbar));
-*/
 
     /*///////////////////////////////////////////////////////////////////////////
     //
@@ -123,5 +110,7 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void presenterCallbackEmpty(String sJsonStr, String sServiceName);
 
     protected abstract void presenterCallbackError(String sJsonStr, String sServiceName);
+
+    protected abstract void presenterCallbackAllTaskFinish(String sServiceName);
 
 }

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -24,7 +23,7 @@ import com.samcai.cutilslibrary.utils.LogUtils;
 /**
  * Created by caizhenliang on 2018/3/2.
  *
- * @version 1.4
+ * @version 1.6
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -98,37 +97,37 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 5,initContent<br>
      * 6,handleNewIntent<br>
      */
-    protected abstract void handleNewIntent(@NonNull Bundle sBundle);
-
-    /**
-     * 1,handleIntent<br>
-     * 2,initHeader<br>
-     * 3,initNavigationBar<br>
-     * 4,initCoverLayer<br>
-     * 5,initContent<br>
-     * 6,handleNewIntent<br>
-     */
-    protected abstract void handleIntent(@NonNull Bundle sBundle);
-
-    /**
-     * 1,handleIntent<br>
-     * 2,initHeader<br>
-     * 3,initNavigationBar<br>
-     * 4,initCoverLayer<br>
-     * 5,initContent<br>
-     * 6,handleNewIntent<br>
-     */
     protected abstract void initContent();
-
-    protected abstract void initHeader();
-
-    protected abstract void initNavigationBar();
-
-    protected abstract void initCoverLayer(Context sContext);
 
     /*///////////////////////////////////////////////////////////////////////////
     //
     ///////////////////////////////////////////////////////////////////////////*/
+
+    /**
+     * 1,handleIntent<br>
+     * 2,initHeader<br>
+     * 3,initNavigationBar<br>
+     * 4,initCoverLayer<br>
+     * 5,initContent<br>
+     * 6,handleNewIntent<br>
+     */
+    protected void handleNewIntent(Bundle sBundle) {}
+
+    /**
+     * 1,handleIntent<br>
+     * 2,initHeader<br>
+     * 3,initNavigationBar<br>
+     * 4,initCoverLayer<br>
+     * 5,initContent<br>
+     * 6,handleNewIntent<br>
+     */
+    protected void handleIntent(Bundle sBundle) {}
+
+    protected void initHeader() {}
+
+    protected void initNavigationBar() {}
+
+    protected void initCoverLayer(Context sContext) {}
 
     protected int initMenuID() {
         return 0;
@@ -167,7 +166,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         LogUtils.LogFailure(sJsonStr, sServiceName);
     }
 
-    protected void presenterCallbackAllTaskFinish() {
+    protected void presenterCallbackAllTaskFinish(String sServiceName) {
         LogUtils.d(LoadTaskUtils.TAG, LoadTaskUtils.ALL_FINISHED, LoadTaskUtils.TAG);
     }
 
@@ -175,7 +174,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mLoadTaskEnable) {
             LoadTaskUtils.setLoadTaskFinished(sServiceName);
             if (LoadTaskUtils.isAllFinished()) {
-                presenterCallbackAllTaskFinish();
+                presenterCallbackAllTaskFinish(sServiceName);
             }
         }
     }

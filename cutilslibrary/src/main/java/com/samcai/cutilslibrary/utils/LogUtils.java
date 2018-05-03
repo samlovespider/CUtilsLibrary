@@ -15,7 +15,7 @@ import java.util.Arrays;
 /**
  * Created by caizhenliang on 2018/2/21.
  *
- * @version 1.7
+ * @version 1.8
  */
 public class LogUtils {
 
@@ -69,7 +69,7 @@ public class LogUtils {
     }
 
     public static void i(String tag, Object o) {
-        i(tag, o, HEADER);
+        i(tag, o, tag);
     }
 
     public static void i(String tag, Object o, String header) {
@@ -81,7 +81,7 @@ public class LogUtils {
     }
 
     public static void iJson(String tag, String json) {
-        iJson(tag, json, HEADER);
+        iJson(tag, json, tag);
     }
 
     public static void iJson(String tag, String json, String header) {
@@ -95,7 +95,7 @@ public class LogUtils {
     }
 
     public static void d(String tag, Object o) {
-        d(tag, o, HEADER);
+        d(tag, o, tag);
     }
 
     public static void d(String tag, Object o, String header) {
@@ -107,7 +107,7 @@ public class LogUtils {
     }
 
     public static void dJson(String tag, String json) {
-        dJson(tag, json, HEADER);
+        dJson(tag, json, tag);
     }
 
     public static void dJson(String tag, String json, String header) {
@@ -121,7 +121,7 @@ public class LogUtils {
     }
 
     public static void w(String tag, @Nullable Object o) {
-        w(tag, o, HEADER);
+        w(tag, o, tag);
     }
 
     public static void w(String tag, Object o, String header) {
@@ -133,7 +133,7 @@ public class LogUtils {
     }
 
     public static void wJson(String tag, String json) {
-        wJson(tag, json, HEADER);
+        wJson(tag, json, tag);
     }
 
     public static void wJson(String tag, String json, String header) {
@@ -147,7 +147,7 @@ public class LogUtils {
     }
 
     public static void e(String tag, Object o) {
-        e(tag, o, HEADER);
+        e(tag, o, tag);
     }
 
     public static void e(String tag, Object o, String header) {
@@ -159,7 +159,7 @@ public class LogUtils {
     }
 
     public static void eJson(String tag, String json) {
-        eJson(tag, json, HEADER);
+        eJson(tag, json, tag);
     }
 
     public static void eJson(String tag, String json, String header) {
