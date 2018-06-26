@@ -9,14 +9,14 @@ import com.samcai.cutilslibrary.BuildConfig;
 /**
  * Created by caizhenliang on 2018/3/22.
  *
- * @version 1.3
+ * @version 1.4
  */
 public class SharedPreferencesUtils {
 
     /**
      * init in application
      */
-    public static String TAG = BuildConfig.APPLICATION_ID;
+    private static String TAG = BuildConfig.APPLICATION_ID;
 
     public static void init(String sTAG) {
         TAG = sTAG;
@@ -33,11 +33,6 @@ public class SharedPreferencesUtils {
         edit.apply();
     }
 
-    public static String getString(Context context, String tag) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(TAG, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(tag, "");
-    }
-
     public static void save(Context context, String tag, boolean isContent) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(TAG, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
@@ -52,8 +47,21 @@ public class SharedPreferencesUtils {
         edit.apply();
     }
 
+    public static void clear(Context context, String tag) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(TAG, Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.remove(tag);
+        edit.apply();
+    }
+
+    public static String getString(Context context, String tag) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(TAG, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(tag, "");
+    }
+
     public static boolean getBoolean(Context context, String tag) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(TAG, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(tag, false);
     }
+
 }

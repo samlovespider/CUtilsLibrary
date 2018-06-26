@@ -16,28 +16,29 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.samcai.cutilslibrary.utils.LoadTaskUtils;
+import com.samcai.cutilslibrary.utils.AppLifecycleUtils;
+import com.samcai.cutilslibrary.utils.LoadRequestUtils;
 import com.samcai.cutilslibrary.utils.LogUtils;
 
 
 /**
  * Created by caizhenliang on 2018/3/2.
  *
- * @version 1.6
+ * @version 1.7
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
     /**
-     * use load task or not
+     * use load Request or not
      */
-    private boolean mLoadTaskEnable = false;
+    private boolean mLoadRequestEnable = false;
 
-    public boolean isLoadTaskEnable() {
-        return mLoadTaskEnable;
+    public boolean isLoadRequestEnable() {
+        return mLoadRequestEnable;
     }
 
-    public void setLoadTaskEnable(boolean sLoadTaskEnable) {
-        this.mLoadTaskEnable = sLoadTaskEnable;
+    public void setLoadRequestEnable(boolean sLoadRequestEnable) {
+        this.mLoadRequestEnable = sLoadRequestEnable;
     }
 
     /*///////////////////////////////////////////////////////////////////////////
@@ -81,6 +82,23 @@ public abstract class BaseActivity extends AppCompatActivity {
             getMenuInflater().inflate(menuID, menu);
         }
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!AppLifecycleUtils.isForeground(this)) {
+            AppLifecycleUtils.isActive = false;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!AppLifecycleUtils.isActive) {
+            applicationWillEnterForeground();
+            AppLifecycleUtils.isActive = true;
+        }
     }
 
     /*///////////////////////////////////////////////////////////////////////////
@@ -144,6 +162,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void uiHandlerCallback(Message sMsg) {}
 
+    protected void applicationWillEnterForeground() {
+        LogUtils.i("AppLifecycle applicationWillEnterForeground");
+    }
+
     /*///////////////////////////////////////////////////////////////////////////
     // CallBack
     ///////////////////////////////////////////////////////////////////////////*/
@@ -166,15 +188,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         LogUtils.LogFailure(sJsonStr, sServiceName);
     }
 
-    protected void presenterCallbackAllTaskFinish(String sServiceName) {
-        LogUtils.d(LoadTaskUtils.TAG, LoadTaskUtils.ALL_FINISHED, LoadTaskUtils.TAG);
+    protected void presenterCallbackAllRequestFinish(String sServiceName) {
+        LogUtils.d(LoadRequestUtils.TAG, LoadRequestUtils.ALL_FINISHED, LoadRequestUtils.TAG);
     }
 
     private void loadTaskState(String sServiceName) {
-        if (mLoadTaskEnable) {
-            LoadTaskUtils.setLoadTaskFinished(sServiceName);
-            if (LoadTaskUtils.isAllFinished()) {
-                presenterCallbackAllTaskFinish(sServiceName);
+        if (mLoadRequestEnable) {
+            LoadRequestUtils.setLoadRequestFinished(sServiceName);
+            if (LoadRequestUtils.isAllFinished()) {
+                presenterCallbackAllRequestFinish(sServiceName);
             }
         }
     }

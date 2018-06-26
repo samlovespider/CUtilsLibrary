@@ -22,6 +22,7 @@ public class ProgressDialogUtils {
         if (mContext.equals(context)) {
             if (mProgressDialog == null) {
                 mProgressDialog = ProgressDialog.show(context, "", text);
+                mProgressDialog.setCancelable(true);
             } else {
                 mProgressDialog.setMessage(text);
             }
@@ -30,6 +31,7 @@ public class ProgressDialogUtils {
             mProgressDialog.cancel();
             mProgressDialog = null;
             mProgressDialog = ProgressDialog.show(context, "", text);
+            mProgressDialog.setCancelable(true);
         }
 
         mProgressDialog.show();
